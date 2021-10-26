@@ -30,9 +30,10 @@ class Phone
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
      */
     private $price;
+
 
     /**
      * @ORM\Column(type="text")

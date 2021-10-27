@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -14,16 +15,19 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"userList"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"userDetail", "userList"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"userDetail", "userList"})
      */
     private $lastName;
 
@@ -34,6 +38,7 @@ class User
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Serializer\Groups({"userDetail", "userList"})
      */
     private $createdAt;
 

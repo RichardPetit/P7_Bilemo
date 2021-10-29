@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PhoneRepository::class)
@@ -24,18 +25,21 @@ class Phone
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le champs de la marque ne peut etre vide")
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le nom ne peut etre vide")
      */
     private $name;
 
     /**
      * @ORM\Column(type="float")
      * @Serializer\Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le prix ne peut etre vide")
      */
     private $price;
 
@@ -43,12 +47,14 @@ class Phone
     /**
      * @ORM\Column(type="text")
      * @Serializer\Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le contenu ne peut etre vide")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="La couleur ne peut etre vide")
      */
     private $color;
 

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -19,11 +21,15 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups ("articles:read")
+     * @Assert\NotBlank(message="Le titre ne peut etre vide")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups ("articles:read")
+     * @Assert\NotBlank(message="Le contenu ne peut etre vide")
      */
     private $content;
 

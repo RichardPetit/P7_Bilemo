@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class PhoneController extends AbstractController
 {
     /**
-     * @Route("/phone", name="phone", methods={"GET"})
+     * @Route("/phones", name="phone", methods={"GET"})
      */
     public function index(PhoneRepository $phoneRepository): Response
     {

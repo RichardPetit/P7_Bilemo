@@ -6,7 +6,7 @@ use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -17,19 +17,19 @@ class Customer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"customerList"})
+     * @Groups({"customerDetail", "customerList"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"customerDetail", "customerList"})
+     * @Groups({"customerDetail", "customerList"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"customerDetail", "customerList"})
+     * @Groups({"customerDetail", "customerList"})
      */
     private $email;
 
@@ -38,15 +38,18 @@ class Customer
      */
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="customer")
-     */
-    private $users;
 
     /**
      * @ORM\ManyToMany(targetEntity=Phone::class, inversedBy="customers")
+     * @Groups({"customerDetail", "customerList"})
      */
     private $phones;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="customers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -95,40 +98,11 @@ class Customer
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getCustomer() === $this) {
-                $user->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Phone[]
      */
-    public function getPhones(): Collection
+    public function getPhones(): ?Collection
     {
         return $this->phones;
     }
@@ -145,6 +119,18 @@ class Customer
     public function removePhone(Phone $phone): self
     {
         $this->phones->removeElement($phone);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

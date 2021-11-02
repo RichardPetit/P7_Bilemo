@@ -16,10 +16,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user", methods={"GET"})
+     * @Route("/users", name="user", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
+
+
         return $this->json( $userRepository->findAll(),200, []);
     }
 

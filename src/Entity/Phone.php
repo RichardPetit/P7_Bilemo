@@ -6,42 +6,56 @@ use App\Repository\PhoneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PhoneRepository::class)
  */
 class Phone
 {
+    public const GROUP_LIST = "phoneList";
+    public const GROUP_DETAIL = "phoneDetail";
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"phoneList"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le champs de la marque ne peut etre vide")
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le nom ne peut etre vide")
      */
     private $name;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le prix ne peut etre vide")
      */
     private $price;
 
-
     /**
      * @ORM\Column(type="text")
+     * @Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="Le contenu ne peut etre vide")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"phoneDetail", "phoneList"})
+     * @Assert\NotBlank(message="La couleur ne peut etre vide")
      */
     private $color;
 

@@ -2,23 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Phone;
 use App\Repository\CustomerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-/**
- * @Route("/customer", name="customer")
- */
+
 class CustomerController extends AbstractController
 {
-    public function __invoke(): JsonResponse
+    /**
+     * @Route("/customers", name="customer", methods={"GET"})
+     */
+    public function index(CustomerRepository $customerRepository, NormalizerInterface $normalizer): Response
     {
-        return $this->json('test customer');
+        $customers = $customerRepository->findAll();
+        $response = $normalizer->normalize($customers, 'array', [AbstractNormalizer::GROUPS => ['customerList', Phone::GROUP_DETAIL]]);
+
+        return $this->json( $response);
     }
-//        public function __invoke(CustomerRepository $customerRepository)
-//    {
-//        return $customerRepository->findAll();
-//    }
 
 }

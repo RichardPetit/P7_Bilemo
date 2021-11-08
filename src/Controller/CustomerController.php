@@ -18,7 +18,7 @@ class CustomerController extends AbstractController
      */
     public function index(CustomerRepository $customerRepository, NormalizerInterface $normalizer): Response
     {
-        $customers = $customerRepository->findAll();
+        $customers = $customerRepository->findBy(['user' => $this->getUser()]);
         $response = $normalizer->normalize($customers, 'array', [AbstractNormalizer::GROUPS => ['customerList', Phone::GROUP_DETAIL]]);
 
         return $this->json( $response);

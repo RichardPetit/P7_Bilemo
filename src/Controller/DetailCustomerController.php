@@ -16,8 +16,16 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class DetailCustomerController extends AbstractController
 {
 
-    public function __invoke(Customer $customer, NormalizerInterface $normalizer): Response
+    public function __invoke(NormalizerInterface $normalizer, Customer $customer = null): Response
     {
+        if ($customer === null) {
+            return $this->json('Customer not found', 404);
+        }
+
+        if ($customer->getUser() !== $this->getUser()){
+            return $this->json('No authorization', 403);
+
+        }
 
         $response = $normalizer->normalize($customer, 'array', [AbstractNormalizer::GROUPS => ['customerDetail', Phone::GROUP_DETAIL]]);
 

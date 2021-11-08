@@ -13,8 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DeleteCustomerController extends AbstractController
 {
-    public function __invoke(Customer $customer, EntityManagerInterface $em): Response
+    public function __invoke(EntityManagerInterface $em, Customer $customer = null): Response
     {
+        if ($customer === null) {
+            return $this->json('Customer not found', 404);
+        }
+
+        if ($customer->getUser() !== $this->getUser()){
+            return $this->json('No authorization', 403);
+
+        }
+
         $em->remove($customer);
         $em->flush();
         return $this->json( '', 204);

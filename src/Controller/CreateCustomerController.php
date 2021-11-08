@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Entity\Phone;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +28,6 @@ class CreateCustomerController extends AbstractController
     public function __invoke(Request $request,
                                  SerializerInterface $serializer,
                                  EntityManagerInterface $em,
-                                 UserRepository $userRepository,
                                  NormalizerInterface $normalizer,
                                  ValidatorInterface $validator): JsonResponse
     {
@@ -37,7 +35,7 @@ class CreateCustomerController extends AbstractController
 
         try {
             $customer = $serializer->deserialize($data, Customer::class, 'json');
-            $customer->setUser($userRepository->find(1));
+            $customer->setUser($this->getUser());
 
             $error = $validator->validate($customer);
             if (count($error) > 0) {

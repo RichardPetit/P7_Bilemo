@@ -22,6 +22,18 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * @param ValidatorInterface $validator
  * @return JsonResponse
  * @Route("/customers", name="customer_create", methods={"POST"} )
+  * @OA\Post(
+ *     path="/customers",
+ *     security={"bearer"},
+ *     @\OpenApi\Annotations\Response(
+ *          response="201",
+ *          description="Création d'un client",
+ *          @JsonContent(type="array", @Items(ref="#/components/schemas/Customer")),
+ *     )
+ *     @OA\Response(response=404, description="La ressource n'existe pas"),
+ *     @OA\Response(response=401, description="Jeton d'authentification invalide")
+ *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
+ * )
  */
 class CreateCustomerController extends AbstractController
 {

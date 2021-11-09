@@ -15,6 +15,17 @@ class CustomerController extends AbstractController
 {
     /**
      * @Route("/customers", name="customer", methods={"GET"})
+     * @OA\Get(
+     *     path="/customers",
+     *     @\OpenApi\Annotations\Response(
+     *          response="200",
+     *          description="Liste des clients",
+     *          @JsonContent(type="array", @Items(ref="#/components/schemas/Customer")),
+     *     )
+     *     @OA\Response(response=404, description="La ressource n'existe pas"),
+     *     @OA\Response(response=401, description="Jeton d'authentification invalide")
+     *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
+     * )
      */
     public function index(CustomerRepository $customerRepository, NormalizerInterface $normalizer): Response
     {

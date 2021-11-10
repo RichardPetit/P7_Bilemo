@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use OpenApi\Annotations as OA;
+
 
 
 class CustomerController extends AbstractController
@@ -17,10 +19,10 @@ class CustomerController extends AbstractController
      * @Route("/customers", name="customer", methods={"GET"})
      * @OA\Get(
      *     path="/customers",
-     *     @\OpenApi\Annotations\Response(
+     *     @OA\Response(
      *          response="200",
      *          description="Liste des clients",
-     *          @JsonContent(type="array", @Items(ref="#/components/schemas/Customer")),
+     *          @OA\JsonContent(type="array", @Items(ref="#/components/schemas/Customer")),
      *     )
      *     @OA\Response(response=404, description="La ressource n'existe pas"),
      *     @OA\Response(response=401, description="Jeton d'authentification invalide")

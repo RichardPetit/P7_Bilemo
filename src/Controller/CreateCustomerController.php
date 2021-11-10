@@ -14,6 +14,8 @@ use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Annotations as OA;
+
 
 /**
  * @param Request $request
@@ -25,11 +27,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
   * @OA\Post(
  *     path="/customers",
  *     security={"bearer"},
- *     @\OpenApi\Annotations\Response(
+ *     @OA\Response(
  *          response="201",
  *          description="Création d'un client",
- *          @JsonContent(type="array", @Items(ref="#/components/schemas/Customer")),
- *     )
+ *          @OA\JsonContent(type="array", @Items(ref="#/components/schemas/Customer"))
+ * )
  *     @OA\Response(response=404, description="La ressource n'existe pas"),
  *     @OA\Response(response=401, description="Jeton d'authentification invalide")
  *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")

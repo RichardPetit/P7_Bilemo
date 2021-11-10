@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use OpenApi\Annotations\OpenApi as OA;
+use OpenApi\Annotations as OA;
 
 
 /**
@@ -25,7 +25,7 @@ use OpenApi\Annotations\OpenApi as OA;
  *         required=true,
  *     @OA\Schema(type="integer")
  * ),
- *     @\OpenApi\Annotations\Response(
+ *     @OA\Response(
  *     response="200",
  *     description="Détails d'un mobile",
  *     @JsonContent(ref="#/components/schemas/Phone"

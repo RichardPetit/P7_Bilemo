@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: 'API Bilemo'
+  version: '0.1'
+servers:
+  -
+    url: 'http://localhost:8000/swagger'
+    description: 'API for Bilemo''s Project'
+components:
+  securitySchemes:
+    bearer:
+      type: apiKey
+      name: bearer
+      in: header
+      bearerFormat: JWT

@@ -7,16 +7,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
+
 
 /**
  * @Route("/customers/{id}", name="customer_delete", methods={"DELETE"})
  * @OA\Delete(
  *     path="/customers",
  *     secirity={"bearer"},
- *     @\OpenApi\Annotations\Response(
+ *     @OA\Response(
  *          response="204",
  *          description="Suppression d'un client",
- *          @JsonContent(type="array", @Items(ref="#/components/schemas/Customer")),
+ *          @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Customer")),
  *     )
  *     @OA\Response(response=404, description="La ressource n'existe pas"),
  *     @OA\Response(response=401, description="Jeton d'authentification invalide")

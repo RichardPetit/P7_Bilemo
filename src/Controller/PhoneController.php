@@ -8,13 +8,13 @@ use OpenApi\Annotations\JsonContent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Annotations\OpenApi as OA;
+use OpenApi\Annotations as OA;
 
 /**
  * @Route("/phones", name="phone", methods={"GET"})
  * @OA\Get(
  *     path="/phones",
- *     @\OpenApi\Annotations\Response(
+ *     @OA\Response(
  *          response="200",
  *          description="Liste des mobiles",
  *          @JsonContent(type="array", @Items(ref="#/components/schemas/Phone")),

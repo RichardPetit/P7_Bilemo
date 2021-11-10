@@ -1,10 +1,10 @@
 <?php
-use OpenApi\Annotations\OpenApi as OA;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(title="API Bilemo", version="0.1")
  * @OA\Server(
- *     url="http://localhost:8000/",
+ *     url="http://localhost:8000/swagger",
  *     description="API for Bilemo's Project"
  * )
  * @OA\SecurityScheme(

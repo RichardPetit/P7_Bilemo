@@ -61,6 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le mot de passe ne peut etre vide")
      */
     private $password;
 

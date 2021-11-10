@@ -10,6 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/customers/{id}", name="customer_delete", methods={"DELETE"})
+ * @OA\Delete(
+ *     path="/customers",
+ *     secirity={"bearer"},
+ *     @\OpenApi\Annotations\Response(
+ *          response="204",
+ *          description="Suppression d'un client",
+ *          @JsonContent(type="array", @Items(ref="#/components/schemas/Customer")),
+ *     )
+ *     @OA\Response(response=404, description="La ressource n'existe pas"),
+ *     @OA\Response(response=401, description="Jeton d'authentification invalide")
+ *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
+ * )
  */
 class DeleteCustomerController extends AbstractController
 {

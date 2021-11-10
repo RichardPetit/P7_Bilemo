@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -24,17 +25,21 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customerDetail", "customerList"})
+     * @Assert\NotBlank(message="Le nom ne peut etre vide")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customerDetail", "customerList"})
+     * @Assert\NotBlank(message="L'email ne peut etre vide")
+     * @Assert\Email(message="Le format email n'est pas respecté")
      */
     private $email;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le mot de passe ne peut etre vide")
      */
     private $password;
 

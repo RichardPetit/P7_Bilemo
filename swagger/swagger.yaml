@@ -7,6 +7,40 @@ servers:
     url: 'http://localhost:8000/swagger'
     description: 'API for Bilemo''s Project'
 paths:
+  /customers:
+    get:
+      responses:
+        '200':
+          description: 'Liste des clients'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        '404':
+          description: 'La page demandée n''existe pas'
+        '401':
+          description: "Jeton d'authentification invalide"
+        '403':
+          description: "L'accès à cette page ne vous est pas autorisé"
+  /customers2:
+    post:
+      summary: "Création d'un client"
+      description: "Création d'un client"
+      operationId: "addCustomer"
+      parameters:
+        -
+          name: "body"
+          in: "body"
+          description: "nom du client"
+          requirer: true
+          schema:
+            $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: "Création d'un client"
+
   '/customers/{id}':
     delete:
       parameters:
@@ -33,7 +67,7 @@ paths:
       security:
         -
           scalar: bearer
-  '/customers/{id}':
+  '/customers/{customerId}':
     get:
       parameters:
         -

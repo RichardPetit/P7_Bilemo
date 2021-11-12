@@ -13,15 +13,22 @@ use OpenApi\Annotations as OA;
 /**
  * @Route("/customers/{id}", name="customer_delete", methods={"DELETE"})
  * @OA\Delete(
- *     path="/customers",
- *     secirity={"bearer"},
+ *     path="/customers/{id}",
+ *     security={"bearer"},
+ *     @OA\Parameter(
+ *          name="id",
+ *          in="path",
+ *          description="ID du client",
+ *          required=true,
+ *          @OA\Schema(type="integer")
+ *      ),
  *     @OA\Response(
  *          response="204",
  *          description="Suppression d'un client",
- *          @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Customer")),
- *     )
+ *          @OA\JsonContent(ref="#/components/schemas/Customer")
+ *     ),
  *     @OA\Response(response=404, description="La ressource n'existe pas"),
- *     @OA\Response(response=401, description="Jeton d'authentification invalide")
+ *     @OA\Response(response=401, description="Jeton d'authentification invalide"),
  *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
  * )
  */

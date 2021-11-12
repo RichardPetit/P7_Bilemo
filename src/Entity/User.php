@@ -10,10 +10,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use OpenApi\Annotations as OA;
+
 
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @OA\Schema()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -22,6 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"userList"})
+     * @OA\Property(type="integer")
      */
     private $id;
 
@@ -30,6 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * @Groups({"userDetail", "userList"})
      * @Assert\NotBlank(message="Le prénom ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $firstName;
 
@@ -37,6 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      * @Groups({"userDetail", "userList"})
      * @Assert\NotBlank(message="Le nom ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $lastName;
 
@@ -45,12 +51,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"userDetail", "userList"})
      * @Assert\NotBlank(message="L'email ne peut etre vide")
      * @Assert\Email(message="Le format email n'est pas respecté")
+     * @OA\Property(type="string")
      */
     private $email;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Groups({"userDetail", "userList"})
+     * @OA\Property(type="string", format="date-time")
      */
     private $createdAt;
 

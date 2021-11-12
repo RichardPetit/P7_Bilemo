@@ -17,10 +17,10 @@ use OpenApi\Annotations as OA;
  *     @OA\Response(
  *          response="200",
  *          description="Liste des mobiles",
- *          @JsonContent(type="array", @Items(ref="#/components/schemas/Phone")),
- *     )
+ *          @JsonContent(type="array", @Items(ref="#/components/schemas/Phone"))
+ *     ),
  *     @OA\Response(response=404, description="Le mobile n'existe pas"),
- *     @OA\Response(response=401, description="Jeton d'authentification invalide")
+ *     @OA\Response(response=401, description="Jeton d'authentification invalide"),
  *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
  * )
  */

@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
+
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
+ * @OA\Schema()
  */
 class Customer
 {
@@ -19,6 +22,7 @@ class Customer
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"customerDetail", "customerList"})
+     * @OA\Property(type="integer")
      */
     private $id;
 
@@ -26,6 +30,7 @@ class Customer
      * @ORM\Column(type="string", length=255)
      * @Groups({"customerDetail", "customerList"})
      * @Assert\NotBlank(message="Le nom ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $name;
 
@@ -34,12 +39,14 @@ class Customer
      * @Groups({"customerDetail", "customerList"})
      * @Assert\NotBlank(message="L'email ne peut etre vide")
      * @Assert\Email(message="Le format email n'est pas respecté")
+     * @OA\Property(type="string")
      */
     private $email;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Le mot de passe ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $password;
 
@@ -47,6 +54,7 @@ class Customer
     /**
      * @ORM\ManyToMany(targetEntity=Phone::class, inversedBy="customers")
      * @Groups({"customerDetail", "customerList"})
+     * @OA\Property(type="string")
      */
     private $phones;
 

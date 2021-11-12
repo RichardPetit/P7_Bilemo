@@ -23,13 +23,13 @@ use OpenApi\Annotations as OA;
  *         in="path",
  *         description="ID du mobile",
  *         required=true,
- *     @OA\Schema(type="integer")
- * ),
+ *          @OA\Schema(type="integer")
+ *      ),
  *     @OA\Response(
- *     response="200",
- *     description="Détails d'un mobile",
- *     @JsonContent(ref="#/components/schemas/Phone"
- *      )
+ *          response="200",
+ *          description="Détails d'un mobile",
+ *          @JsonContent(ref="#/components/schemas/Phone")
+ *     ),
  *     @OA\Response(response=404, description="Le mobile n'existe pas"),
  *     @OA\Response(response=401, description="Jeton d'authentification invalide")
  * )

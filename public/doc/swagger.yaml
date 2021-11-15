@@ -25,6 +25,8 @@ paths:
           description: "Jeton d'authentification invalide"
         '403':
           description: "L'accès à cette page ne vous est pas autorisé"
+      security:
+        - scalar: bearer
     post:
       summary: "Création d'un client"
       description: "Création d'un client"
@@ -139,6 +141,8 @@ paths:
           description: 'Jeton d''authentification invalide'
         '403':
           description: 'L''accès à cette page ne vous est pas autorisé'
+      security:
+        - scalar: bearer
 components:
   schemas:
     Customer:

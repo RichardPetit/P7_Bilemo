@@ -4,7 +4,7 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Info(title="API Bilemo", version="0.1")
  * @OA\Server(
- *     url="http://localhost:8000/swagger",
+ *     url="http://localhost:8000",
  *     description="API for Bilemo's Project"
  * )
  * @OA\SecurityScheme(

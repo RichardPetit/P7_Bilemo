@@ -22,7 +22,7 @@ class CustomerController extends AbstractController
      *     @OA\Response(
      *          response="200",
      *          description="Liste des clients",
-     *          @OA\JsonContent(type="array", @Items(ref="#/components/schemas/Customer"))
+     *          @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Customer"))
      *     ),
      *     @OA\Response(response=404, description="La ressource n'existe pas"),
      *     @OA\Response(response=401, description="Jeton d'authentification invalide"),

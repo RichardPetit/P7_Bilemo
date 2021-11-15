@@ -17,7 +17,7 @@ use OpenApi\Annotations as OA;
  * @OA\Get (
  *     path="/customers/{id}",
  *     security={"bearer"},
- *     @Parameter(
+ *     @OA\Parameter(
  *         name="id",
  *         in="path",
  *         description="ID du client",

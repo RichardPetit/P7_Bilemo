@@ -8,9 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=PhoneRepository::class)
+ * @OA\Schema()
  */
 class Phone
 {
@@ -21,6 +23,7 @@ class Phone
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"phoneList"})
+     * @OA\Property(type="integer")
      */
     private $id;
 
@@ -28,6 +31,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups({"phoneDetail", "phoneList"})
      * @Assert\NotBlank(message="Le champs de la marque ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $brand;
 
@@ -35,6 +39,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups({"phoneDetail", "phoneList"})
      * @Assert\NotBlank(message="Le nom ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $name;
 
@@ -42,6 +47,7 @@ class Phone
      * @ORM\Column(type="float")
      * @Groups({"phoneDetail", "phoneList"})
      * @Assert\NotBlank(message="Le prix ne peut etre vide")
+     * @OA\Property(type="integer")
      */
     private $price;
 
@@ -49,6 +55,7 @@ class Phone
      * @ORM\Column(type="text")
      * @Groups({"phoneDetail", "phoneList"})
      * @Assert\NotBlank(message="Le contenu ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $description;
 
@@ -56,6 +63,7 @@ class Phone
      * @ORM\Column(type="string", length=255)
      * @Groups({"phoneDetail", "phoneList"})
      * @Assert\NotBlank(message="La couleur ne peut etre vide")
+     * @OA\Property(type="string")
      */
     private $color;
 

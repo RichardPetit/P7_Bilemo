@@ -9,9 +9,30 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use OpenApi\Annotations as OA;
+
 
 /**
  * @Route("/customers/{id}", name="customer_detail", methods={"GET"})
+ * @OA\Get (
+ *     path="/customers/{id}",
+ *     security={"bearer"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID du client",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *      ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="Détails d'un client",
+ *          @OA\JsonContent(ref="#/components/schemas/Customer")
+ *     ),
+ *     @OA\Response(response=404, description="Le client n'existe pas"),
+ *     @OA\Response(response=401, description="Jeton d'authentification invalide"),
+ *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
+ * )
  */
 class DetailCustomerController extends AbstractController
 {

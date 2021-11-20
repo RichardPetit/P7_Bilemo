@@ -16,13 +16,14 @@ use OpenApi\Annotations as OA;
  */
 class Phone
 {
+    const BASE_URL = '/phones';
     public const GROUP_LIST = "phoneList";
     public const GROUP_DETAIL = "phoneDetail";
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"phoneList"})
+     * @Groups({"phoneList", "phoneDetail"})
      * @OA\Property(type="integer")
      */
     private $id;
@@ -72,10 +73,34 @@ class Phone
      */
     private $customers;
 
+
+    /**
+     * @Groups({"phoneList"})
+     */
+    private $detailsUrl;
+
+    /**
+     * @Groups({"phoneDetail"})
+     */
+    private $listUrl;
+
+
+
     public function __construct()
     {
         $this->customers = new ArrayCollection();
     }
+
+    public function getListUrl(): string
+    {
+        return self::BASE_URL;
+    }
+
+    public function getDetailsUrl(): string
+    {
+        return self::BASE_URL.'/'.$this->getId();
+    }
+
 
     public function getId(): ?int
     {

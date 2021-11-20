@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Phone;
 use App\Repository\PhoneRepository;
 use OpenApi\Annotations\Items;
 use OpenApi\Annotations\JsonContent;
@@ -9,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 /**
  * @Route("/phones", name="phone", methods={"GET"})
@@ -29,7 +31,9 @@ class PhoneController extends AbstractController
 
     public function __invoke(PhoneRepository $phoneRepository): Response
     {
-        return $this->json( $phoneRepository->findAll(),200, []);
+        return $this->json( $phoneRepository->findAll(),200, [] ,[
+            AbstractNormalizer::GROUPS => Phone::GROUP_LIST
+        ]);
     }
 
 }

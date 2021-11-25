@@ -37,7 +37,10 @@ class CustomerController extends AbstractController
      *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
      * )
      */
-    public function list(CustomerRepository $customerRepository, NormalizerInterface $normalizer, User $user = null): Response
+    public function list(CustomerRepository $customerRepository,
+                         NormalizerInterface $normalizer,
+                         Request $request,
+                         User $user = null): Response
     {
         if ($user === null) {
             return $this->json('User not found', 404);
@@ -45,10 +48,22 @@ class CustomerController extends AbstractController
         if ($user !== $this->getUser()) {
             return $this->json('No authorization', 403);
         }
-        $customers = $customerRepository->findBy(['user' => $this->getUser()]);
+
+        $page = $request->get('page') !== null ? (int) $request->get('page') : 1;
+
+        $customers = $customerRepository->getUsersByCreationDate($page);
+//        $customers = $customerRepository->findBy(['user' => $this->getUser()]);
         $response = $normalizer->normalize($customers, 'array', [AbstractNormalizer::GROUPS => ['customerList', Phone::GROUP_DETAIL]]);
 
-        return $this->json( $response);
+        return $this->json( $response
+//            ,[
+//            'customers' => $customers,
+//            'nbPages'   => $customerRepository->getNbOfPages(),
+//            'currentPage' => $page,
+//            'url' => 'users/{user}/customers'
+//        ]
+        );
+
     }
 
     /**

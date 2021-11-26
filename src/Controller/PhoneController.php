@@ -82,7 +82,7 @@ class PhoneController extends AbstractController
         try {
             $phone = $phoneService->getPhoneById($id);
         } catch (PhoneNotFoundException $exception){
-            return $this->json('Phone not found', 404);
+            return $this->json('Phone not found', Response::HTTP_NOT_FOUND);
         }
         $response = $normalizer->normalize($phone, 'array', [AbstractNormalizer::GROUPS => [Phone::GROUP_DETAIL]]);
 

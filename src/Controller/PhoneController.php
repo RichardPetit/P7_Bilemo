@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Phone;
+use App\Exception\PhoneNotFoundException;
 use App\Repository\PhoneRepository;
+use App\Service\PhoneService;
+use App\Service\PhoneServiceInterface;
 use OpenApi\Annotations\Items;
 use OpenApi\Annotations\JsonContent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Annotations as OA;
@@ -31,11 +35,25 @@ class PhoneController extends AbstractController
      *     @OA\Response(response=403, description="L'accès à cette page ne vous est pas autorisé")
      * )
      */
-    public function list(PhoneRepository $phoneRepository): Response
+    public function list(PhoneServiceInterface $phoneService,
+                         NormalizerInterface $normalizer,
+                         Request $request): Response
     {
-        return $this->json( $phoneRepository->findAll(),200, [] ,[
-            AbstractNormalizer::GROUPS => Phone::GROUP_LIST
-        ]);
+        $page = $request->get('page') !== null ? (int) $request->get('page') : 1;
+
+        $phones = $phoneService->getPhones($page);
+
+        $phonesResponse = $normalizer->normalize($phones, 'array', [AbstractNormalizer::GROUPS => [Phone::GROUP_LIST]]);
+
+        $response = [
+            'items' => $phonesResponse,
+            'page' => $page,
+            'itemsPerPage' => $phoneService->getItemsPerPage(),
+            'totalPages' => $phoneService->getTotalPages(),
+            'totalItems' => $phoneService->getTotalNumberOfPhones()
+        ];
+
+        return $this->json($response);
     }
 
     /**
@@ -59,13 +77,14 @@ class PhoneController extends AbstractController
      *     @OA\Response(response=401, description="Jeton d'authentification invalide")
      * )
      */
-    public function details( NormalizerInterface $normalizer, Phone $phone = null): Response
+    public function details( NormalizerInterface $normalizer, int $id, PhoneServiceInterface $phoneService): Response
     {
-        if ($phone === null) {
+        try {
+            $phone = $phoneService->getPhoneById($id);
+        } catch (PhoneNotFoundException $exception){
             return $this->json('Phone not found', 404);
         }
-
-        $response = $normalizer->normalize($phone, 'array', [AbstractNormalizer::GROUPS => ['phoneDetail']]);
+        $response = $normalizer->normalize($phone, 'array', [AbstractNormalizer::GROUPS => [Phone::GROUP_DETAIL]]);
 
         return $this->json( $response);
     }

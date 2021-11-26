@@ -22,11 +22,12 @@ class CustomerRepository extends ServiceEntityRepository
         parent::__construct($registry, Customer::class);
     }
 
-    public function getUsersByCreationDate(int $page = 1 , int $nbResults = self::NB_PER_PAGE)
+    public function getCustomersForUser( int $userId, int $page = 1 , int $nbResults = self::NB_PER_PAGE)
     {
         $offset = ($page -1) * $nbResults;
         return $this->createQueryBuilder('u')
-//            ->orderBy('u.createdAt', 'DESC')
+            ->where('u.user = :userId')
+            ->setParameter('userId', $userId)
             ->getQuery()
             ->setMaxResults($nbResults)
             ->setFirstResult($offset)
@@ -34,22 +35,27 @@ class CustomerRepository extends ServiceEntityRepository
             ;
     }
 
-    public function getTotalNumberOfUsersForACustomer(User $user) : int
+    public function getTotalNumberOfCustomerForAUser(int $userId) : int
     {
         return $this->createQueryBuilder('c')
             ->select('count(c.id)')
             ->where('c.user = :userId')
-            ->setParameter('userId', $user->getId())
+            ->setParameter('userId', $userId)
             ->getQuery()->getSingleScalarResult();
     }
 
-    public function getNbOfPages(User $user) : int
+    public function getTotalPages(int $userId) : int
     {
-        $totalCount = $this->getTotalNumberOfUsersForACustomer($user);
+        $totalCount = $this->getTotalNumberOfCustomerForAUser($userId);
         if ($totalCount <= self::NB_PER_PAGE) {
             return 1;
         }
         return $totalCount % self::NB_PER_PAGE === 0 ? $totalCount / self::NB_PER_PAGE : ceil($totalCount / self::NB_PER_PAGE);
+    }
+
+    public function getItemsPerPage() : int
+    {
+        return self::NB_PER_PAGE;
     }
 
     // /**
@@ -80,4 +86,5 @@ class CustomerRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

@@ -51,18 +51,19 @@ class CustomerController extends AbstractController
 
         $page = $request->get('page') !== null ? (int) $request->get('page') : 1;
 
-        $customers = $customerRepository->getUsersByCreationDate($page);
-//        $customers = $customerRepository->findBy(['user' => $this->getUser()]);
-        $response = $normalizer->normalize($customers, 'array', [AbstractNormalizer::GROUPS => ['customerList', Phone::GROUP_DETAIL]]);
+        $userId = $this->getUser()->getId();
 
-        return $this->json( $response
-//            ,[
-//            'customers' => $customers,
-//            'nbPages'   => $customerRepository->getNbOfPages(),
-//            'currentPage' => $page,
-//            'url' => 'users/{user}/customers'
-//        ]
-        );
+        $customers = $customerRepository->getCustomersForUser($userId, $page);
+        $customersResponse = $normalizer->normalize($customers, 'array', [AbstractNormalizer::GROUPS => ['customerList', Phone::GROUP_DETAIL]]);
+        $response = [
+            'items' => $customersResponse,
+            'page' => $page,
+            'itemsPerPage' => $customerRepository->getItemsPerPage(),
+            'totalPages' => $customerRepository->getTotalPages($userId),
+            'totalItems' => $customerRepository->getTotalNumberOfCustomerForAUser($userId)
+        ];
+
+        return $this->json( $response );
 
     }
 

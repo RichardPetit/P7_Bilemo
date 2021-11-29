@@ -44,7 +44,7 @@ paths:
       security:
         - scalar: bearer
 
-  '/customers/{id}':
+  '/users/{userId}/customers/{customerId}':
     delete:
       summary: "Suppression d'un client"
       parameters:
@@ -71,7 +71,7 @@ paths:
       security:
         -
           scalar: bearer
-  '/customers/{customerId}':
+  '/users/{user}/customers/{customerId}':
     get:
       summary: "Détail du client"
       parameters:
